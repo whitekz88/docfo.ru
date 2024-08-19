@@ -192,7 +192,9 @@ function qa_tag_html($tag, $microdata = false, $favorited = false)
 {
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-	$url = qa_path_html('tag/' . $tag);
+	//STW_EDIT
+	$url = qa_path_html('tag-' . totranslit($tag));
+	//$url = qa_path_html('tag/' . $tag);
 	$attrs = $microdata ? ' rel="tag"' : '';
 	$class = $favorited ? ' qa-tag-favorited' : '';
 

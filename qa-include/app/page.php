@@ -185,11 +185,19 @@ function qa_get_request_content()
 	} elseif (isset($routing[$firstlower . '/'])) {
 		qa_set_template($firstlower);
 		$qa_content = require QA_INCLUDE_DIR . $routing[$firstlower . '/'];
-
-	} elseif (is_numeric($requestparts[0])) {
+	//STW_EDIT	
+	} elseif (strpos($requestparts[0], 'question-') === 0) {
 		qa_set_template('question');
 		$qa_content = require QA_INCLUDE_DIR . 'pages/question.php';
 
+	} elseif (strpos($requestparts[0], 'tag-') === 0) {
+		qa_set_template('tag');
+		$qa_content = require QA_INCLUDE_DIR . 'pages/tag.php';
+	/*
+	} elseif (is_numeric($requestparts[0])) {
+		qa_set_template('question');
+		$qa_content = require QA_INCLUDE_DIR . 'pages/question.php';
+	*/	
 	} else {
 		qa_set_template(strlen($firstlower) ? $firstlower : 'qa'); // will be changed later
 		$qa_content = require QA_INCLUDE_DIR . 'pages/default.php'; // handles many other pages, including custom pages and page modules
