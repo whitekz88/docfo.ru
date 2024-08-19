@@ -186,7 +186,7 @@ class qa_xml_sitemap
 					break;
 
 				foreach ($users as $user) {
-					$this->sitemap_output('user/' . $user['handle'], 0.25);
+					$this->sitemap_output('user/id' . $user['userid'], 0.25);
 					$nextuserid = max($nextuserid, $user['userid'] + 1);
 				}
 			}

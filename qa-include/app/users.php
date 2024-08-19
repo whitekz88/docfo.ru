@@ -555,15 +555,15 @@ if (QA_FINAL_EXTERNAL_USERS) {
 	 * @param bool $favorited  Show the user as favorited.
 	 * @return string  The user HTML.
 	 */
-	function qa_get_one_user_html($handle, $microdata = false, $favorited = false)
+	function qa_get_one_user_html($userid, $handle, $microdata = false, $favorited = false)
 	{
 		if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
-		if (strlen((string)$handle) === 0) {
+		if (strlen((string)$userid) === 0) {
 			return qa_lang('main/anonymous');
 		}
 
-		$url = qa_path_html('user/' . $handle);
+		$url = qa_path_html('user/id' . $userid);
 		$favclass = $favorited ? ' qa-user-favorited' : '';
 		$mfAttr = $microdata ? ' itemprop="url"' : '';
 

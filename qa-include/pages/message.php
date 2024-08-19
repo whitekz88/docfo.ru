@@ -78,7 +78,7 @@ if (!qa_opt('allow_private_messages') || !is_array($toaccount))
 if ($toaccount['flags'] & QA_USER_FLAGS_NO_MESSAGES) {
 	$qa_content['error'] = qa_lang_html_sub(
 		'profile/user_x_disabled_pms',
-		sprintf('<a href="%s">%s</a>', qa_path_html('user/' . $handle), qa_html($handle))
+		sprintf('<a href="%s">%s</a>', qa_path_html('user/id' . $toaccount['userid']), qa_html($handle))
 	);
 	return $qa_content;
 }
@@ -138,13 +138,13 @@ if (qa_post_text('domessage')) {
 
 			$more = strtr(qa_lang($canreply ? 'emails/private_message_reply' : 'emails/private_message_info'), array(
 				'^f_handle' => $fromhandle,
-				'^url' => qa_path_absolute($canreply ? ('message/' . $fromhandle) : ('user/' . $fromhandle)),
+				'^url' => qa_path_absolute($canreply ? ('message/' . $fromhandle) : ('user/id' . $loginuserid)),
 			));
 
 			$subs = array(
 				'^message' => $inmessage,
 				'^f_handle' => $fromhandle,
-				'^f_url' => qa_path_absolute('user/' . $fromhandle),
+				'^f_url' => qa_path_absolute('user/id' . $loginuserid),
 				'^more' => $more,
 				'^a_url' => qa_path_absolute('account'),
 			);
@@ -186,7 +186,7 @@ $qa_content['form_message'] = array(
 	'fields' => array(
 		'message' => array(
 			'type' => $hideForm ? 'static' : '',
-			'label' => qa_lang_html_sub('misc/message_for_x', qa_get_one_user_html($handle, false)),
+			'label' => qa_lang_html_sub('misc/message_for_x', qa_get_one_user_html($toaccount['userid'], $handle, false)),
 			'tags' => 'name="message" id="message"',
 			'value' => qa_html(@$inmessage, $messagesent),
 			'rows' => 8,

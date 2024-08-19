@@ -85,7 +85,7 @@ if (qa_clicked('dofeedback')) {
 				'^name' => empty($inname) ? '-' : $inname,
 				'^email' => empty($inemail) ? '-' : $inemail,
 				'^previous' => empty($inreferer) ? '-' : $inreferer,
-				'^url' => isset($userid) ? qa_path_absolute('user/' . qa_get_logged_in_handle()) : '-',
+				'^url' => isset($userid) ? qa_path_absolute('user/id' . qa_get_logged_in_userid()) : '-',
 				'^ip' => qa_remote_ip_address(),
 				'^browser' => @$_SERVER['HTTP_USER_AGENT'],
 			);

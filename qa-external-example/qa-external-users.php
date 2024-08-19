@@ -444,7 +444,7 @@ function qa_get_logged_in_user_html($logged_in_user, $relative_url_prefix)
 
 	$publicusername = $logged_in_user['publicusername'];
 
-	return '<a href="' . qa_path_html('user/' . $publicusername) . '" class="qa-user-link">' . htmlspecialchars($publicusername) . '</a>';
+	return '<a href="' . qa_path_html('user/id' . $publicusername) . '" class="qa-user-link">' . htmlspecialchars($publicusername) . '</a>';
 
 	/*
 		Example 1 - suitable if:

@@ -958,7 +958,7 @@ if (!QA_FINAL_EXTERNAL_USERS && qa_opt('allow_user_walls')) {
 		$qa_content['message_list']['messages'][] = qa_wall_post_view($message);
 
 	if ($useraccount['wallposts'] > count($usermessages))
-		$qa_content['message_list']['messages'][] = qa_wall_view_more_link($handle, count($usermessages));
+		$qa_content['message_list']['messages'][] = qa_wall_view_more_link($userid, $handle, count($usermessages));
 }
 
 

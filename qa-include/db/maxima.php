@@ -29,7 +29,7 @@ $maximaDefaults = array(
 	// Maximum column sizes - any of these can be defined in qa-config.php to override the defaults below,
 	// but you need to do so before creating the database, otherwise it's too late.
 	'QA_DB_MAX_EMAIL_LENGTH' => 80,
-	'QA_DB_MAX_HANDLE_LENGTH' => 20,
+	'QA_DB_MAX_HANDLE_LENGTH' => 90,
 	'QA_DB_MAX_TITLE_LENGTH' => 800,
 	'QA_DB_MAX_CONTENT_LENGTH' => 12000,
 	'QA_DB_MAX_FORMAT_LENGTH' => 20,

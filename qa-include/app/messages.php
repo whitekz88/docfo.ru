@@ -201,9 +201,9 @@ function qa_wall_post_view($message)
  * @param $start
  * @return array
  */
-function qa_wall_view_more_link($handle, $start)
+function qa_wall_view_more_link($userid, $handle, $start)
 {
-	$url = qa_path_html('user/' . $handle . '/wall', array('start' => $start));
+	$url = qa_path_html('user/id' . $userid . '/wall', array('start' => $start));
 	return array(
 		'content' => '<a href="' . $url . '">' . qa_lang_html('profile/wall_view_more') . '</a>',
 	);
