@@ -208,7 +208,9 @@ class qa_xml_sitemap
 					break;
 
 				foreach ($tagwords as $tagword) {
-					$this->sitemap_output('tag/' . $tagword['word'], 0.5 / (1 + (1 / $tagword['tagcount']))); // priority between 0.25 and 0.5 depending on tag frequency
+					//STW_EDIT
+					$this->sitemap_output('tag-' . totranslit($tagword['word']), 0.5 / (1 + (1 / $tagword['tagcount']))); // priority between 0.25 and 0.5 depending on tag frequency
+					//$this->sitemap_output('tag/' . $tagword['word'], 0.5 / (1 + (1 / $tagword['tagcount']))); // priority between 0.25 and 0.5 depending on tag frequency
 					$nextwordid = max($nextwordid, $tagword['wordid'] + 1);
 				}
 			}
@@ -230,7 +232,9 @@ class qa_xml_sitemap
 					break;
 
 				foreach ($categories as $category) {
-					$this->sitemap_output('questions/' . implode('/', array_reverse(explode('/', $category['backpath']))), 0.5);
+					//STW_EDIT
+					$this->sitemap_output(implode('/', array_reverse(explode('/', $category['backpath']))), 0.5);
+					//$this->sitemap_output('questions/' . implode('/', array_reverse(explode('/', $category['backpath']))), 0.5);
 					$nextcategoryid = max($nextcategoryid, $category['categoryid'] + 1);
 				}
 			}

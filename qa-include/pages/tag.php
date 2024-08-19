@@ -29,6 +29,12 @@ require_once QA_INCLUDE_DIR . 'app/format.php';
 require_once QA_INCLUDE_DIR . 'app/updates.php';
 
 $tag = qa_request_part(1); // picked up from qa-page.php
+
+//STW_EDIT
+$tag_ext = explode("-", qa_request_part(0)); 
+$tag = $tag_ext[1];
+$tag = totranslit($tag);
+
 $start = qa_get_start();
 $userid = qa_get_logged_in_userid();
 
@@ -54,7 +60,9 @@ $usershtml = qa_userids_handles_html($questions);
 $qa_content = qa_content_prepare(true);
 
 if (count($questions) > 0) {
-	$qa_content['title'] = qa_lang_html_sub('main/questions_tagged_x', qa_html($tag));
+	//STW_EDIT
+	$qa_content['title'] = qa_lang_html_sub('main/questions_tagged_x', qa_html($tagword['word']));
+	//$qa_content['title'] = qa_lang_html_sub('main/questions_tagged_x', qa_html($tag));
 } else {
 	$qa_content['title'] = qa_lang_html('main/no_questions_found');
 	header('HTTP/1.0 404 Not Found');

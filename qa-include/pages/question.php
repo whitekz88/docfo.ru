@@ -34,6 +34,11 @@ require_once QA_INCLUDE_DIR . 'pages/question-view.php';
 require_once QA_INCLUDE_DIR . 'app/updates.php';
 
 $questionid = qa_request_part(0);
+
+//STW_EDIT+
+$questionid_ext = explode("-", qa_request_part(0)); 
+$questionid = intval($questionid_ext[1]);
+	
 $userid = qa_get_logged_in_userid();
 $cookieid = qa_cookie_get();
 $pagestate = qa_get_state();

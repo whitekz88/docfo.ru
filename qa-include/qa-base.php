@@ -1627,6 +1627,135 @@ function qa_path($request, $params = null, $rooturl = null, $neaturls = null, $a
 }
 
 
+//STW_EDIT
+function dle_strlen($value, $charset = "utf-8" ) {
+
+	if( function_exists( 'mb_strlen' ) ) {
+		return mb_strlen( $value, $charset );
+	} elseif( function_exists( 'iconv_strlen' ) ) {
+		return iconv_strlen($value, $charset);
+	}
+
+	return strlen($value);
+}
+
+
+//STW_EDIT
+function dle_strtolower($str, $charset = "utf-8" ) {
+
+	if( function_exists( 'mb_strtolower' ) ) {
+		return mb_strtolower( $str, $charset );
+	}
+
+	return strtolower($str);
+
+}
+
+
+//STW_EDIT
+function totranslit($var, $lower = true, $punkt = true, $translit = true ) {
+	
+	$langtranslit = array(
+	'а' => 'a', 'б' => 'b', 'в' => 'v',
+	'г' => 'g', 'д' => 'd', 'е' => 'e',
+	'ё' => 'e', 'ж' => 'zh', 'з' => 'z',
+	'и' => 'i', 'й' => 'y', 'к' => 'k',
+	'л' => 'l', 'м' => 'm', 'н' => 'n',
+	'о' => 'o', 'п' => 'p', 'р' => 'r',
+	'с' => 's', 'т' => 't', 'у' => 'u',
+	'ф' => 'f', 'х' => 'h', 'ц' => 'c',
+	'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch',
+	'ь' => '', 'ы' => 'y', 'ъ' => '',
+	'э' => 'e', 'ю' => 'yu', 'я' => 'ya',
+	"ї" => "yi", "є" => "ye",
+
+	'А' => 'A', 'Б' => 'B', 'В' => 'V',
+	'Г' => 'G', 'Д' => 'D', 'Е' => 'E',
+	'Ё' => 'E', 'Ж' => 'Zh', 'З' => 'Z',
+	'И' => 'I', 'Й' => 'Y', 'К' => 'K',
+	'Л' => 'L', 'М' => 'M', 'Н' => 'N',
+	'О' => 'O', 'П' => 'P', 'Р' => 'R',
+	'С' => 'S', 'Т' => 'T', 'У' => 'U',
+	'Ф' => 'F', 'Х' => 'H', 'Ц' => 'C',
+	'Ч' => 'Ch', 'Ш' => 'Sh', 'Щ' => 'Sch',
+	'Ь' => '', 'Ы' => 'Y', 'Ъ' => '',
+	'Э' => 'E', 'Ю' => 'Yu', 'Я' => 'Ya',
+	"Ї" => "yi", "Є" => "ye", 
+	"À"=>"A", "à"=>"a", "Á"=>"A", "á"=>"a", 
+	"Â"=>"A", "â"=>"a", "Ä"=>"A", "ä"=>"a", 
+	"Ã"=>"A", "ã"=>"a", "Å"=>"A", "å"=>"a", 
+	"Æ"=>"AE", "æ"=>"ae", "Ç"=>"C", "ç"=>"c", 
+	"Ð"=>"D", "È"=>"E", "è"=>"e", "É"=>"E", 
+	"é"=>"e", "Ê"=>"E", "ê"=>"e", "Ì"=>"I", 
+	"ì"=>"i", "Í"=>"I", "í"=>"i", "Î"=>"I", 
+	"î"=>"i", "Ï"=>"I", "ï"=>"i", "Ñ"=>"N", 
+	"ñ"=>"n", "Ò"=>"O", "ò"=>"o", "Ó"=>"O", 
+	"ó"=>"o", "Ô"=>"O", "ô"=>"o", "Ö"=>"O", 
+	"ö"=>"o", "Õ"=>"O", "õ"=>"o", "Ø"=>"O", 
+	"ø"=>"o", "Œ"=>"OE", "œ"=>"oe", "Š"=>"S", 
+	"š"=>"s", "Ù"=>"U", "ù"=>"u", "Û"=>"U", 
+	"û"=>"u", "Ú"=>"U", "ú"=>"u", "Ü"=>"U", 
+	"ü"=>"u", "Ý"=>"Y", "ý"=>"y", "Ÿ"=>"Y", 
+	"ÿ"=>"y", "Ž"=>"Z", "ž"=>"z", "Þ"=>"B", 
+	"þ"=>"b", "ß"=>"ss", "£"=>"pf", "¥"=>"ien", 
+	"ð"=>"eth", "ѓ"=>"r"
+	);
+	
+	if ( !is_string($var) ) return "";
+
+	$bads = array( '!', '*', '\'', '(', ')', ';', ':', '@', '&', '=', '+', '$', ',', '/', '?', '#', '[', ']', '%', '\\', '"', '<', '>', '^', '{', '}', '|', '`', '.php' );
+
+	$var = html_entity_decode($var, ENT_QUOTES | ENT_HTML5, 'utf-8');
+
+	$var = strip_tags( $var );
+	$var = str_replace(chr(0), '', $var);
+	
+	if ( $lower ) {
+		$var = dle_strtolower($var);	
+	}
+	
+	$var = str_replace( array( "\r\n", "\r", "\n" ), ' ', $var );
+	$var = preg_replace( "/\s+/u", "-", $var );
+
+	if ( !$punkt ) {
+		$bads[] = '.';
+	}
+	
+	$var = str_ireplace( $bads, '', $var );
+	
+	if( $translit ) {
+		
+		if (is_array($langtranslit) AND count($langtranslit) ) {
+			$var = strtr($var, $langtranslit);
+		}
+		
+		if ( $punkt ) {
+			
+			$var = preg_replace( "/[^a-z0-9\_\-.]+/mi", '', $var );
+			$var = preg_replace( '#[.]+#i', '.', $var );
+			
+		} else $var = preg_replace( "/[^a-z0-9\_\-]+/mi", '', $var );
+	
+	}
+	
+	$var = str_ireplace( ".php", ".ppp", $var );
+	$var = preg_replace( '/\-+/', '-', $var );
+	
+	if( dle_strlen( $var ) > 150 ) {
+		
+		$var = dle_substr( $var, 0, 150 );
+		
+		if( ($temp_max = dle_strrpos( $var, '-' )) ) $var = dle_substr( $var, 0, $temp_max );
+	
+	}
+    
+	$var = trim( $var, '-' );
+    $var = trim( $var );
+	
+	return $var;
+}
+
+
 /**
  * Return HTML representation of relative URI path for $request - see qa_path() for other parameters
  * @param $request
@@ -1672,7 +1801,9 @@ function qa_q_request($questionid, $title)
 	$title = qa_block_words_replace($title, qa_get_block_words_preg());
 	$slug = qa_slugify($title, qa_opt('q_urls_remove_accents'), qa_opt('q_urls_title_length'));
 
-	return (int)$questionid . '/' . $slug;
+	//STW_EDIT
+	return 'question' . '-' . (int)$questionid . '-' . totranslit($slug);	
+	//return (int)$questionid . '/' . $slug;
 }
 
 
