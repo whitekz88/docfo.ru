@@ -105,7 +105,7 @@ if (count($users)) {
 		}
 
 		$message['meta_order'] = qa_lang_html('main/meta_order');
-		$message['who']['data'] = qa_get_one_user_html($user['handle']);
+		$message['who']['data'] = qa_get_one_user_html($user['userid'], $user['handle']);
 
 		$message['form'] = array(
 			'style' => 'light',

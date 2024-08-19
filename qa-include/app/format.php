@@ -124,12 +124,12 @@ function qa_userids_handles_html($useridhandles, $microdata = false)
 			// only add each user to the array once
 			$uid = isset($useridhandle['userid']) ? $useridhandle['userid'] : null;
 			if ($uid && !isset($usershtml[$uid])) {
-				$usershtml[$uid] = qa_get_one_user_html($useridhandle['handle'], $microdata, @$favoritemap['user'][$uid]);
+				$usershtml[$uid] = qa_get_one_user_html($useridhandle['userid'], $useridhandle['handle'], $microdata, @$favoritemap['user'][$uid]);
 			}
 
 			$luid = isset($useridhandle['lastuserid']) ? $useridhandle['lastuserid'] : null;
 			if ($luid && !isset($usershtml[$luid])) {
-				$usershtml[$luid] = qa_get_one_user_html($useridhandle['lasthandle'], $microdata, @$favoritemap['user'][$luid]);
+				$usershtml[$luid] = qa_get_one_user_html($useridhandle['userid'], $useridhandle['lasthandle'], $microdata, @$favoritemap['user'][$luid]);
 			}
 		}
 
@@ -720,17 +720,17 @@ function qa_message_html_fields($message, $options = array())
 	// when it was written
 	if (@$options['whenview'])
 		$fields['when'] = qa_when_to_html($message['created'], @$options['fulldatedays']);
-
+	
 	// who wrote it, and their avatar
 	if (@$options['towhomview']) {
 		// for sent private messages page (i.e. show who message was sent to)
-		$fields['who'] = qa_lang_html_sub_split('main/to_x', qa_get_one_user_html($message['tohandle'], false));
+		$fields['who'] = qa_lang_html_sub_split('main/to_x', qa_get_one_user_html($message['touserid'], $message['tohandle'], false));
 		$fields['avatar'] = qa_get_user_avatar_html(@$message['toflags'], @$message['toemail'], @$message['tohandle'],
 			@$message['toavatarblobid'], @$message['toavatarwidth'], @$message['toavatarheight'], $options['avatarsize']);
 	} else {
 		// for everything else (received private messages, wall messages)
 		if (@$options['whoview']) {
-			$fields['who'] = qa_lang_html_sub_split('main/by_x', qa_get_one_user_html($message['fromhandle'], false));
+			$fields['who'] = qa_lang_html_sub_split('main/by_x', qa_get_one_user_html($message['fromuserid'], $message['fromhandle'], false));
 		}
 		if (@$options['avatarsize'] > 0) {
 			$fields['avatar'] = qa_get_user_avatar_html(@$message['fromflags'], @$message['fromemail'], @$message['fromhandle'],
@@ -1480,10 +1480,12 @@ function qa_users_sub_navigation()
  */
 function qa_user_sub_navigation($handle, $selected, $ismyuser = false)
 {
+	$userid = qa_handle_to_userid($handle);
+	
 	$navigation = array(
 		'profile' => array(
 			'label' => qa_lang_html_sub('profile/user_x', qa_html($handle)),
-			'url' => qa_path_html('user/' . $handle),
+			'url' => qa_path_html('user/id' . $userid),
 		),
 
 		'account' => array(
@@ -1498,7 +1500,7 @@ function qa_user_sub_navigation($handle, $selected, $ismyuser = false)
 
 		'wall' => array(
 			'label' => qa_lang_html('misc/nav_user_wall'),
-			'url' => qa_path_html('user/' . $handle . '/wall'),
+			'url' => qa_path_html('user/id' . $userid . '/wall'),
 		),
 
 		'messages' => array(
@@ -1508,17 +1510,17 @@ function qa_user_sub_navigation($handle, $selected, $ismyuser = false)
 
 		'activity' => array(
 			'label' => qa_lang_html('misc/nav_user_activity'),
-			'url' => qa_path_html('user/' . $handle . '/activity'),
+			'url' => qa_path_html('user/id' . $userid . '/activity'),
 		),
 
 		'questions' => array(
 			'label' => qa_lang_html('misc/nav_user_qs'),
-			'url' => qa_path_html('user/' . $handle . '/questions'),
+			'url' => qa_path_html('user/id' . $userid . '/questions'),
 		),
 
 		'answers' => array(
 			'label' => qa_lang_html('misc/nav_user_as'),
-			'url' => qa_path_html('user/' . $handle . '/answers'),
+			'url' => qa_path_html('user/id' . $userid . '/answers'),
 		),
 	);
 

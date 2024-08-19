@@ -56,5 +56,5 @@ if ($errorhtml || !strlen((string)$message) || !qa_check_form_security_code('wal
 	}
 
 	if ($morelink && ($touseraccount['wallposts'] > count($usermessages)))
-		$themeclass->message_item(qa_wall_view_more_link($tohandle, count($usermessages)));
+		$themeclass->message_item(qa_wall_view_more_link($touseraccount['userid'], $tohandle, count($usermessages)));
 }

@@ -727,7 +727,7 @@ function qa_content_prepare($voting = false, $categoryids = array())
 	if (qa_is_logged_in()) {
 		$qa_content['loggedin'] = qa_lang_html_sub_split('main/logged_in_x', QA_FINAL_EXTERNAL_USERS
 			? qa_get_logged_in_user_html(qa_get_logged_in_user_cache(), qa_path_to_root(), false)
-			: qa_get_one_user_html(qa_get_logged_in_handle(), false)
+			: qa_get_one_user_html(qa_get_logged_in_userid(), qa_get_logged_in_handle(), false)
 		);
 
 		$qa_content['navigation']['user']['updates'] = array(

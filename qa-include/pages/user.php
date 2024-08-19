@@ -27,11 +27,13 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
 
 // Determine the identify of the user
 
-$handle = qa_request_part(1);
+$userid = intval(ltrim(qa_request_part(1), 'id'));
+$handle = qa_userid_to_handle($userid);
+//$handle = qa_request_part(1);
 
 if (!strlen((string)$handle)) {
 	$handle = qa_get_logged_in_handle();
-	qa_redirect(!empty($handle) ? 'user/' . $handle : 'users');
+	qa_redirect(!empty($handle) ? 'user/id' . $userid : 'users');
 }
 
 

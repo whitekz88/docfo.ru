@@ -239,7 +239,7 @@ class qa_event_notify
 					qa_send_notification(null, qa_opt('feedback_email'), null, qa_lang('emails/u_registered_subject'),
 						qa_opt('moderate_users') ? qa_lang('emails/u_to_approve_body') : qa_lang('emails/u_registered_body'), array(
 							'^u_handle' => $handle,
-							'^url' => qa_path_absolute('user/' . $handle),
+							'^url' => qa_path_absolute('user/id' . $userid),
 							'^a_url' => qa_path_absolute('admin/approve'),
 						));
 				}
@@ -249,7 +249,7 @@ class qa_event_notify
 			case 'u_level':
 				if ($params['level'] >= QA_USER_LEVEL_APPROVED && $params['oldlevel'] < QA_USER_LEVEL_APPROVED) {
 					qa_send_notification($params['userid'], null, $params['handle'], qa_lang('emails/u_approved_subject'), qa_lang('emails/u_approved_body'), array(
-						'^url' => qa_path_absolute('user/' . $params['handle']),
+						'^url' => qa_path_absolute('user/id' . $params['userid']),
 					));
 				}
 				break;
@@ -262,7 +262,7 @@ class qa_event_notify
 					qa_send_notification($params['userid'], null, $params['handle'], qa_lang('emails/wall_post_subject'), qa_lang('emails/wall_post_body'), array(
 						'^f_handle' => isset($handle) ? $handle : qa_lang('main/anonymous'),
 						'^post' => qa_block_words_replace($params['text'], $blockwordspreg),
-						'^url' => qa_path_absolute('user/' . $params['handle'], null, 'wall'),
+						'^url' => qa_path_absolute('user/id' . $params['userid'], null, 'wall'),
 					));
 				}
 				break;
