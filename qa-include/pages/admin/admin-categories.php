@@ -132,6 +132,10 @@ if (qa_clicked('docancel')) {
 
 		$inname = (string)qa_post_text('name');
 		$incontent = qa_post_text('content');
+		
+		$inseo_meta_title = dle_substr(qa_post_text('seo_meta_title'), 0, 300);
+		$inseo_meta_description = dle_substr(qa_post_text('seo_meta_description'), 0, 300);
+		
 		$inparentid = $setparent ? qa_get_category_field_value('parent') : $editcategory['parentid'];
 		$inposition = qa_post_text('position');
 
@@ -215,6 +219,10 @@ if (qa_clicked('docancel')) {
 				} else {
 					qa_db_category_set_content($editcategory['categoryid'], $incontent);
 					qa_db_category_set_position($editcategory['categoryid'], $inposition);
+					
+					qa_db_category_set_seo_meta_title($editcategory['categoryid'], $inseo_meta_title);
+					qa_db_category_set_seo_meta_description($editcategory['categoryid'], $inseo_meta_description);
+					
 					$recalc = $hassubcategory && $inslug !== $editcategory['tags'];
 				}
 
@@ -224,6 +232,9 @@ if (qa_clicked('docancel')) {
 				$categoryid = qa_db_category_create($inparentid, $inname, $inslug);
 
 				qa_db_category_set_content($categoryid, $incontent);
+				
+				qa_db_category_set_seo_meta_title($categoryid, $inseo_meta_title);
+				qa_db_category_set_seo_meta_description($categoryid, $inseo_meta_description);
 
 				if (isset($inposition))
 					qa_db_category_set_position($categoryid, $inposition);
@@ -319,6 +330,24 @@ if ($setmissing) {
 				'value' => qa_html(isset($incontent) ? $incontent : @$editcategory['content']),
 				'error' => qa_html(isset($errors['content']) ? $errors['content'] : null),
 				'rows' => 2,
+			),
+			
+			'seo_meta_title' => array(
+				'id' => 'seo_meta_title_display',
+				'tags' => 'name="seo_meta_title"',
+				'label' => qa_lang_html('admin/category_seo_meta_title'),
+				'value' => qa_html(isset($inseo_meta_title) ? $inseo_meta_title : @$editcategory['seo_meta_title']),
+				'error' => qa_html(isset($errors['seo_meta_title']) ? $errors['seo_meta_title'] : null),
+				'rows' => 6,
+			),
+			
+			'seo_meta_description' => array(
+				'id' => 'seo_meta_description_display',
+				'tags' => 'name="seo_meta_description"',
+				'label' => qa_lang_html('admin/category_seo_meta_description'),
+				'value' => qa_html(isset($inseo_meta_description) ? $inseo_meta_description : @$editcategory['seo_meta_description']),
+				'error' => qa_html(isset($errors['seo_meta_description']) ? $errors['seo_meta_description'] : null),
+				'rows' => 6,
 			),
 		),
 

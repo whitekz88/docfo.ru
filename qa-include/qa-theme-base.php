@@ -296,15 +296,26 @@ class qa_html_theme_base
 
 	public function head_title()
 	{
-		$pagetitle = strlen($this->request) ? strip_tags(isset($this->content['title']) ? $this->content['title'] : '') : '';
-		$headtitle = (strlen($pagetitle) ? "$pagetitle - " : '') . $this->content['site_title'];
+		
+		if(isset($this->content['seo_meta_title']))
+			$pagetitle = strlen($this->request) ? strip_tags(isset($this->content['seo_meta_title']) ? $this->content['seo_meta_title'] : '') : $this->content['seo_meta_title'];
+		else
+			$pagetitle = strlen($this->request) ? strip_tags(isset($this->content['title']) ? $this->content['title'] : '') : '';
+		
+		if(isset($this->content['seo_meta_title']) AND $pagetitle)
+			$headtitle = $pagetitle;
+		else
+			$headtitle = (strlen($pagetitle) ? "$pagetitle - " : '') . $this->content['site_title'];
 
 		$this->output('<title>' . $headtitle . '</title>');
 	}
 
 	public function head_metas()
 	{
-		if (strlen(isset($this->content['description']) ? $this->content['description'] : '')) {
+		
+		if(isset($this->content['seo_meta_description'])){
+			$this->output('<meta name="description" content="' . $this->content['seo_meta_description'] . '"/>');
+		} else if (strlen(isset($this->content['description']) ? $this->content['description'] : '')) {
 			$this->output('<meta name="description" content="' . $this->content['description'] . '"/>');
 		}
 

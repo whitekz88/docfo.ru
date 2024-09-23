@@ -56,8 +56,9 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
  */
 function qa_q_list_page_content($questions, $pagesize, $start, $count, $sometitle, $nonetitle,
 	$navcategories, $categoryid, $categoryqcount, $categorypathprefix, $feedpathprefix, $suggest,
-	$pagelinkparams = null, $categoryparams = null, $dummy = null)
+	$pagelinkparams = null, $categoryparams = null, $dummy = null, $seo_meta_title = null, $seo_meta_description = null)
 {
+	
 	if (qa_to_override(__FUNCTION__)) { $args=func_get_args(); return qa_call_override(__FUNCTION__, $args); }
 
 	require_once QA_INCLUDE_DIR . 'app/format.php';
@@ -146,6 +147,16 @@ function qa_q_list_page_content($questions, $pagesize, $start, $count, $sometitl
 			'label' => strip_tags($sometitle),
 		);
 	}
+	
+	if($seo_meta_title)
+		$qa_content['seo_meta_title'] = $seo_meta_title;
+	
+	if($seo_meta_description)
+		$qa_content['seo_meta_description'] = $seo_meta_description;
+	
+	//STW_EDIT
+	if($start > 0)
+		$qa_content['seo_meta_title'] .= ' | Страница ' . floor($start / qa_opt('page_size_qs')) + 1;
 
 	return $qa_content;
 }

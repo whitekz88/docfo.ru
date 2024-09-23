@@ -46,6 +46,14 @@ $qa_content = qa_content_prepare();
 
 $qa_content['title'] = qa_lang_html('main/popular_tags');
 
+//STW_EDIT
+$qa_content['seo_meta_title'] = qa_lang_html('custom-seo/seo_tags_title');
+$qa_content['seo_meta_description'] = qa_lang_html('custom-seo/seo_tags_description');
+
+//STW_EDIT
+if($start > 0)
+	$qa_content['seo_meta_title'] .= ' | Страница ' . floor($start / qa_opt_if_loaded('page_size_tags')) + 1;
+
 $qa_content['ranking'] = array(
 	'items' => array(),
 	'rows' => ceil($pagesize / qa_opt('columns_tags')),

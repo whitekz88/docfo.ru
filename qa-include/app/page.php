@@ -851,7 +851,8 @@ function qa_get_canonical()
 	$params = array();
 
 	// variable assignment intentional here
-	if (($start = qa_get_start()) > 0) {
+	//STW_EDIT
+	/*if (($start = qa_get_start()) > 0) {
 		$params['start'] = $start;
 	}
 	if ($sort = qa_get('sort')) {
@@ -859,7 +860,7 @@ function qa_get_canonical()
 	}
 	if ($by = qa_get('by')) {
 		$params['by'] = $by;
-	}
+	}*/
 
 	return qa_path_html(qa_request(), $params, qa_opt('site_url'));
 }

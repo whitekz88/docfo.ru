@@ -1651,6 +1651,20 @@ function dle_strtolower($str, $charset = "utf-8" ) {
 
 }
 
+//STW_EDIT
+function dle_substr($str, $start, $length, $charset = "utf-8" ) {
+
+	if( function_exists( 'mb_substr' ) ) {
+		return mb_substr( $str, $start, $length, $charset );
+	
+	} elseif( function_exists( 'iconv_substr' ) ) {
+		return iconv_substr($str, $start, $length, $charset);
+	}
+
+	return substr($str, $start, $length);
+
+}
+
 
 //STW_EDIT
 function totranslit($var, $lower = true, $punkt = true, $translit = true ) {

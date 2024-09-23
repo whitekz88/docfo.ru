@@ -109,6 +109,15 @@ switch ($sort) {
 		break;
 }
 
+if(isset($categories[$categoryid]['seo_meta_title']))
+	$seo_meta_title = qa_html($categories[$categoryid]['seo_meta_title']);
+else 
+	$seo_meta_title = qa_lang_html('custom-seo/seo_questions_title');
+
+if(isset($categories[$categoryid]['seo_meta_description']))
+	$seo_meta_description = qa_html($categories[$categoryid]['seo_meta_description']);
+else
+	$seo_meta_description = qa_lang_html('custom-seo/seo_questions_description');
 
 // Prepare and return content for theme
 
@@ -126,8 +135,12 @@ $qa_content = qa_q_list_page_content(
 	$feedpathprefix, // prefix for RSS feed paths
 	$countslugs ? qa_html_suggest_qs_tags(qa_using_tags()) : qa_html_suggest_ask($categoryid), // suggest what to do next
 	$linkparams, // extra parameters for page links
-	$linkparams // category nav params
+	$linkparams, // category nav params
+	null,
+	$seo_meta_title,
+	$seo_meta_description
 );
+
 
 if (QA_ALLOW_UNINDEXED_QUERIES || !$countslugs) {
 	$qa_content['navigation']['sub'] = qa_qs_sub_navigation($sort, $categoryslugs);

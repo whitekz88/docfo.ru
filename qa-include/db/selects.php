@@ -1078,7 +1078,10 @@ function qa_db_category_nav_selectspec($slugsorid, $isid, $ispostid = false, $fu
 		'qcount' => '^categories.qcount',
 		'position' => '^categories.position',
 	);
-
+	
+	$columns['seo_meta_title'] = '^categories.seo_meta_title';
+	$columns['seo_meta_description'] = '^categories.seo_meta_description';
+	
 	if ($full) {
 		foreach ($columns as $alias => $column) {
 			$columns[$alias] = 'MAX(' . $column . ')';
@@ -1087,6 +1090,7 @@ function qa_db_category_nav_selectspec($slugsorid, $isid, $ispostid = false, $fu
 		$columns['childcount'] = 'COUNT(child.categoryid)';
 		$columns['content'] = 'MAX(^categories.content)';
 		$columns['backpath'] = 'MAX(^categories.backpath)';
+		
 	}
 
 	array_unshift($columns, '^categories.categoryid');

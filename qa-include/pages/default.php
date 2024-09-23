@@ -133,7 +133,7 @@ if ($countslugs) {
 	if (!isset($categoryid)) {
 		return include QA_INCLUDE_DIR . 'qa-page-not-found.php';
 	}
-
+	
 	$categorytitlehtml = qa_html($categories[$categoryid]['title']);
 	$sometitle = qa_lang_html_sub('main/recent_qs_as_in_x', $categorytitlehtml);
 	$nonetitle = qa_lang_html_sub('main/no_questions_in_x', $categorytitlehtml);
@@ -142,6 +142,18 @@ if ($countslugs) {
 	$sometitle = qa_lang_html('main/recent_qs_as_title');
 	$nonetitle = qa_lang_html('main/no_questions_found');
 }
+
+if(isset($categories[$categoryid]['seo_meta_title']))
+	$seo_meta_title = qa_html($categories[$categoryid]['seo_meta_title']);
+else
+	$seo_meta_title = '';
+
+if(isset($categories[$categoryid]['seo_meta_description']))
+	$seo_meta_description = qa_html($categories[$categoryid]['seo_meta_description']);
+else
+	$seo_meta_description = '';
+
+
 
 
 // Prepare and return content for theme for Q&A listing page
@@ -162,8 +174,16 @@ $qa_content = qa_q_list_page_content(
 		? qa_html_suggest_ask($categoryid)
 		: qa_html_suggest_qs_tags(qa_using_tags(), qa_category_path_request($categories, $categoryid)),
 	null, // page link params
-	null // category nav params
+	null, // category nav params
+	null,
+	$seo_meta_title,
+	$seo_meta_description
 );
 
+//STW_EDIT
+if(!qa_request()){
+	$qa_content['seo_meta_title'] = qa_lang_html('custom-seo/seo_index_title');
+	$qa_content['seo_meta_description'] = qa_lang_html('custom-seo/seo_index_description');
+}
 
 return $qa_content;

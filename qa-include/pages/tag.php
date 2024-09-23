@@ -62,6 +62,13 @@ $qa_content = qa_content_prepare(true);
 if (count($questions) > 0) {
 	//STW_EDIT
 	$qa_content['title'] = qa_lang_html_sub('main/questions_tagged_x', qa_html($tagword['word']));
+
+	$qa_content['seo_meta_title'] = str_ireplace("#TAG#", qa_html($tagword['word']), qa_lang_html('custom-seo/seo_tag_title'));
+	$qa_content['seo_meta_description'] = str_ireplace("#TAG#", qa_html($tagword['word']), qa_lang_html('custom-seo/seo_tag_description'));
+	
+	if($start > 0)
+		$qa_content['seo_meta_title'] .= ' | Страница ' . floor($start / qa_opt_if_loaded('page_size_tag_qs')) + 1;
+	
 	//$qa_content['title'] = qa_lang_html_sub('main/questions_tagged_x', qa_html($tag));
 } else {
 	$qa_content['title'] = qa_lang_html('main/no_questions_found');

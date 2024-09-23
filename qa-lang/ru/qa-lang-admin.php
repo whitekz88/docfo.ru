@@ -89,6 +89,8 @@ return array(
 'category_slug' => 'URL категории:',
 'category_subs' => 'Подкатегории:',
 'category_top_level' => 'Без основной (верхний уровень)',
+'category_seo_meta_title' => 'Seo: meta title (не обязательно):',
+'category_seo_meta_description' => 'Seo: meta description(не обязательно):',
 'characters' => 'символы',
 'check_language_suffix' => ' - ^1проверить языковые файлы^2',
 'click_name_edit' => 'Пользовательские страницы или ссылки:',

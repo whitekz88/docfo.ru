@@ -354,6 +354,34 @@ function qa_db_category_set_content($categoryid, $content)
 
 
 /**
+ * Set the content (=seo_meta_title) of $categoryid to $seo_meta_title
+ * @param $categoryid
+ * @param $seo_meta_title
+ */
+function qa_db_category_set_seo_meta_title($categoryid, $seo_meta_title)
+{
+	qa_db_query_sub(
+		'UPDATE ^categories SET seo_meta_title=$ WHERE categoryid=#',
+		$seo_meta_title, $categoryid
+	);
+}
+
+
+/**
+ * Set the content (=seo_meta_description) of $categoryid to $seo_meta_description
+ * @param $categoryid
+ * @param $seo_meta_description
+ */
+function qa_db_category_set_seo_meta_description($categoryid, $seo_meta_description)
+{
+	qa_db_query_sub(
+		'UPDATE ^categories SET seo_meta_description=$ WHERE categoryid=#',
+		$seo_meta_description, $categoryid
+	);
+}
+
+
+/**
  * Return the parentid of $categoryid
  * @param $categoryid
  * @return mixed|null
