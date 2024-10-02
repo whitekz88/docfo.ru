@@ -918,16 +918,16 @@ class qa_html_theme_base
 		$this->output('</div> <!-- END qa-footer -->', '');
 	}
 
-	public function attribution()
-	{
-		// Hi there. I'd really appreciate you displaying this link on your Q2A site. Thank you - Gideon
+	// public function attribution()
+	// {
+	// 	// Hi there. I'd really appreciate you displaying this link on your Q2A site. Thank you - Gideon
 
-		$this->output(
-			'<div class="qa-attribution">',
-			'Powered by <a href="http://www.question2answer.org/">Question2Answer</a>',
-			'</div>'
-		);
-	}
+	// 	$this->output(
+	// 		'<div class="qa-attribution">',
+	// 		'Powered by <a href="http://www.question2answer.org/">Question2Answer</a>',
+	// 		'</div>'
+	// 	);
+	// }
 
 	public function footer_clear()
 	{
